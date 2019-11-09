@@ -3,15 +3,14 @@ pipeline {
     stages {
         stage('Code Checkout') { 
             steps {
-              withMaven(jdk: 'JDK-1.8', maven: 'Maven-3.6.1') {
-               sh 'mvn code checkout'
+                sh 'echo code checkout'
+                git credentialsId: 'githubID', url: 'https://github.com/itrainpulsars/maven-example.git'
             }
-			}
         }
         stage('Build') { 
             steps {
               withMaven(jdk: 'JDK-1.8', maven: 'Maven-3.6.1') {
-               sh 'mvn build code'
+               sh 'mvn clean compile'
              } 
             }
         }
@@ -29,6 +28,20 @@ pipeline {
              }  
             }
         }
-	}
+        stage('Docker Image') { 
+            steps {
+                sh 'echo Docker Image' 
+            }
+        }
+        stage('Deploy to Dev') { 
+            steps {
+                sh 'echo Deploy to Dev' 
+            }
+        }
+        stage('Deploy to Prod') { 
+            steps {
+                sh 'echo Deploy to Prod' 
+            }
+        }
+    }
 }
-	
